@@ -1,0 +1,4 @@
+- [ ] get current lat and long from browser?
+- [ ] save to LS so don't have to get again?
+- [ ] basic fetch for one day
+- [ ] basic fetch for forecast

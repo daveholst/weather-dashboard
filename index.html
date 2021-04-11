@@ -19,19 +19,19 @@
         <h1 class="title is-1">Weather Dashboard</h1>
       </div>
     </section>
-    <div class="columns">
-      <div class="column is-4">
-        <div class="field m-3">
-          <div class="block m-3">
+    <div class="columns m-1">
+      <div class="column is-3">
+        <div class="field">
+          <div class="block">
             <label class="title is-3">Search for a City:</label>
             <p><b>TIP</b>: for more refined result enter city name with a country code eg. Bridgetown,AU</p>
           </div>
-          <input id="search-field" class="input is-info is-large" type="text" placeholder="Large input" />
+          <input id="search-field" class="input is-info is-large is-fullwidth" type="text" placeholder="Large input" />
         </div>
-        <div class="buttons m-3">
+        <div class="buttons">
           <button id="search-button" class="button is-large is-info is-fullwidth">Search</button>
         </div>
-        <div class="buttons m-3">
+        <div class="buttons">
           <button class="button is-medium is-info is-light is-fullwidth">Search History</button>
           <button class="button is-medium is-info is-light is-fullwidth">Search History</button>
           <button class="button is-medium is-info is-light is-fullwidth">Search History</button>
@@ -47,7 +47,7 @@
         dolorem quam aliquid omnis odit vel, tempora, quaerat asperiores! Voluptatum error libero debitis magni.
       </div>
 
-      <div class="column m-3">
+      <div class="column is-9">
         <div class="container">
           <div class="columns">
             <div id="current-weather" class="column is-half"></div>
@@ -55,12 +55,12 @@
           </div>
         </div>
         <div class="container">
-          <div class="columns">
-            <div class="column is-one-fifth">Day 1</div>
+          <div id="forecast-container" class="columns">
+            <!-- <div class="column is-one-fifth">Day 1</div>
             <div class="column is-one-fifth">Day 2</div>
             <div class="column is-one-fifth">Day 3</div>
             <div class="column is-one-fifth">Day 4</div>
-            <div class="column is-one-fifth">Day 5</div>
+            <div class="column is-one-fifth">Day 5</div> -->
           </div>
         </div>
       </div>

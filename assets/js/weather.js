@@ -1,10 +1,11 @@
+// creates weather object. takes argument for search. <cityName> or <cityName>,<country-code> eg. bridgetown,au
 class Weather {
   constructor(city) {
     this.apiKey = 'b0e377a6dc0651dc529d2d62a44c0ec9';
     this.owmApiURL = 'http://api.openweathermap.org/data/2.5/';
     this.cityInput = city;
     this.currentConditions = {};
-    this.forcastConditions = [];
+    this.forecastConditions = [];
     // this.getWeatherCurrent();
   }
 
@@ -61,9 +62,9 @@ class Weather {
           };
           // loop through daily array to build forecast data (array of objects)
           const forcastDays = 5;
-          for (let i = 0; i <= forcastDays; i += 1) {
+          for (let i = 1; i <= forcastDays; i += 1) {
             const day = data.daily[i];
-            this.forcastConditions[i] = {
+            this.forecastConditions[i] = {
               date: dayjs.unix(day.dt),
               description: day.weather[0].description,
               icon: day.weather[0].icon,
@@ -112,5 +113,48 @@ class Weather {
     const newUV = document.createElement('h4');
     newUV.innerHTML = `Current UV Index: <b>${cond.uv}</b><br> `;
     targetElement.appendChild(newUV);
+    this.buildForecast();
+  }
+
+  buildForecast() {
+    const targetElement = document.querySelector('#forecast-container');
+
+    // if forcast weather is populated --> clear.
+    if (targetElement.innerHTML) targetElement.innerHTML = '';
+    // build loop - start from tomorrow.
+    this.forecastConditions.forEach((day) => {
+      const iconLocation = `http://openweathermap.org/img/wn/${day.icon}.png`;
+      const formattedDate = dayjs(day.date).format('DD/MM/YYYY');
+      const dayName = dayjs(day.date).format('dddd');
+      // create and append flex container
+      const newDiv = document.createElement('div');
+      newDiv.classList.add('column', 'is-one-fifth', 'p-1');
+      newDiv.innerHTML = `
+      <div class="card">
+        <div class="card-content p-1">
+          <div class="media mb-2">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img src=${iconLocation} alt="weather-icon">
+              </figure>
+            </div>
+            <div class="media-content">
+              <p class="title is-6">${formattedDate}</p>
+              <p class="subtitle is-6">${dayName}</p>
+            </div>
+            </div>
+            <div class="content">
+              <p class="is-size-6"><b>${day.description}</b> </p>
+              <p class="is-6 mb-0">Min: <b>${day.minTemp} °C </b></p>
+              <p class="is-6 mb-0">Max: <b>${day.maxTemp} °C</b></p>
+              <p class="is-6 mb-0">Wind: <b>${day.windSpeed} km/h</b> </p>
+              <p class="is-6 mb-0">Humidity: <b>${day.humidity} %</b> </p>
+            </div>
+        </div>
+      </div>
+      `;
+      targetElement.append(newDiv);
+      // create card div
+    });
   }
 }

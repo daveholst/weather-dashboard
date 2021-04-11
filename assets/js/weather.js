@@ -91,35 +91,47 @@ class Weather {
     const targetElement = document.querySelector('#current-weather');
     const cond = this.currentConditions;
     const formattedDate = dayjs(cond.date).format('DD/MM/YYYY');
+    const dayName = dayjs(cond.date).format('dddd');
     const iconLocation = `http://openweathermap.org/img/wn/${cond.icon}.png`;
     // if current weather is populated --> clear.
     if (targetElement.innerHTML) targetElement.innerHTML = '';
-    // create and append cityName Heading
-    const newH3 = document.createElement('H3');
-    newH3.innerHTML = `${this.cityOutput} (${formattedDate})<img src="${iconLocation}" alt="weather-icon">`;
-    newH3.classList.add('title', 'is-4');
-    targetElement.appendChild(newH3);
-    // create and append weather icon + description
-    const newP = document.createElement('p');
-    newP.innerHTML = `Conditions: <b>${cond.description}</b>`;
-    targetElement.appendChild(newP);
-    // create and append temp
-    const newStats = document.createElement('h4');
-    newStats.innerHTML = `Current Temperature: <b>${cond.currentTemp} °C</b> <br>
-     Current Wind Speed: <b>${cond.windSpeed} km/h</b> <br>
-     Current Humidity: <b>${cond.humidity} %</b>`;
-    targetElement.appendChild(newStats);
-    // create and append UV
-    const newUV = document.createElement('h4');
-    newUV.innerHTML = `Current UV Index: <b>${cond.uv}</b><br> `;
-    targetElement.appendChild(newUV);
+    const newDiv = document.createElement('div');
+    // newDiv.classList.add('column', 'is-two-fifths');
+    newDiv.innerHTML = `
+    <div class="card">
+      <div class="card-content p-1">
+        <div class="media mb-2">
+          <div class="media-left">
+            <figure class="image is-48x48">
+              <img src=${iconLocation} alt="weather-icon">
+            </figure>
+          </div>
+          <div class="media-content">
+            <p class="title is-6">${formattedDate}</p>
+            <p class="subtitle is-6">${dayName}</p>
+          </div>
+          </div>
+          <div class="content">
+            <p class="is-size-6"><b>${cond.description}</b> </p>
+            <p class="is-size-6"><b>Curent Temperature ${cond.currentTemp} °C</b> </p>
+            <p class="is-6 mb-0">Todays Min: <b>${cond.minTemp} °C </b></p>
+            <p class="is-6 mb-0">Todays Max: <b>${cond.maxTemp} °C</b></p>
+            <p class="is-6 mb-0">Current Wind: <b>${cond.windSpeed} km/h</b> </p>
+            <p class="is-6 mb-0">Current Humidity: <b>${cond.humidity} %</b> </p>
+            <p class="is-6 mb-0">Current UV Index: <b>${cond.uv} %</b> </p>
+          </div>
+      </div>
+    </div>
+    `;
+    targetElement.append(newDiv);
     this.buildForecast();
+    this.buildMap();
   }
 
   buildForecast() {
     const targetElement = document.querySelector('#forecast-container');
 
-    // if forcast weather is populated --> clear.
+    // if forecast weather is populated --> clear.
     if (targetElement.innerHTML) targetElement.innerHTML = '';
     // build loop - start from tomorrow.
     this.forecastConditions.forEach((day) => {
@@ -128,7 +140,7 @@ class Weather {
       const dayName = dayjs(day.date).format('dddd');
       // create and append flex container
       const newDiv = document.createElement('div');
-      newDiv.classList.add('column', 'is-one-fifth', 'p-1');
+      newDiv.classList.add('column', 'is-one-fifth');
       newDiv.innerHTML = `
       <div class="card">
         <div class="card-content p-1">
@@ -157,4 +169,25 @@ class Weather {
       // create card div
     });
   }
+
+  buildMap() {
+    const targetElement = document.querySelector('#map');
+
+    targetElement.innerHTML = `
+    <div class="card ">
+      <div class="card-content is-flex is-justify-content-center is-align-content-center is-flex-shrink-4">
+        <iframe width="550" height="400" src="https://embed.windy.com/embed2.html?lat=${this.cityCoords.lat}&lon=${this.cityCoords.lng}&width=650&height=450&zoom=7&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=&calendar=now&pressure=true&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1" frameborder="0"></iframe>
+      </div>
+    </div>
+    `;
+  }
+}
+
+{
+  /* <iframe
+  width="650"
+  height="450"
+  src="https://embed.windy.com/embed2.html?lat=-28.699&lon=118.079&detailLat=-31.967&detailLon=115.862&width=650&height=450&zoom=5&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=&calendar=now&pressure=true&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1"
+  frameBorder="0"
+/>; */
 }

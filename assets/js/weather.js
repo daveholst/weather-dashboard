@@ -91,22 +91,24 @@ class Weather {
     const cond = this.currentConditions;
     const formattedDate = dayjs(cond.date).format('DD/MM/YYYY');
     const iconLocation = `http://openweathermap.org/img/wn/${cond.icon}.png`;
-    // create cityName Heading
+    // if current weather is populated --> clear.
+    if (targetElement.innerHTML) targetElement.innerHTML = '';
+    // create and append cityName Heading
     const newH3 = document.createElement('H3');
     newH3.innerHTML = `${this.cityOutput} (${formattedDate})<img src="${iconLocation}" alt="weather-icon">`;
     newH3.classList.add('title', 'is-4');
     targetElement.appendChild(newH3);
-    // create weather icon + description
+    // create and append weather icon + description
     const newP = document.createElement('p');
     newP.innerHTML = `Conditions: <b>${cond.description}</b>`;
     targetElement.appendChild(newP);
-    // create temp
+    // create and append temp
     const newStats = document.createElement('h4');
     newStats.innerHTML = `Current Temperature: <b>${cond.currentTemp} °C</b> <br>
      Current Wind Speed: <b>${cond.windSpeed} km/h</b> <br>
      Current Humidity: <b>${cond.humidity} %</b>`;
     targetElement.appendChild(newStats);
-    // create UV
+    // create and append UV
     const newUV = document.createElement('h4');
     newUV.innerHTML = `Current UV Index: <b>${cond.uv}</b><br> `;
     targetElement.appendChild(newUV);

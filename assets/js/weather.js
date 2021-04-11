@@ -131,8 +131,6 @@ class Weather {
       </div>
     `;
     targetElement.append(newDiv);
-    this.buildForecast();
-    this.buildMap();
   }
 
   buildForecast() {
@@ -147,7 +145,11 @@ class Weather {
       const dayName = dayjs(day.date).format('dddd');
       // create and append flex container
       const newDiv = document.createElement('div');
-      newDiv.classList.add('column', 'is-one-fifth');
+      newDiv.classList.add(
+        'column',
+        'is-half-tablet',
+        'is-one-fifth-widescreen'
+      );
       newDiv.innerHTML = `
       <div class="card">
         <div class="card-content p-2">

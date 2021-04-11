@@ -2,6 +2,7 @@
 
 const searchField = document.querySelector('#search-field');
 const searchButton = document.querySelector('#search-button');
+let weather = {};
 
 searchButton.addEventListener('click', () => {
   const searchLocation = searchField.value;
@@ -13,13 +14,13 @@ searchButton.addEventListener('click', () => {
     .then(() => weather.getWeather())
     .then(() => {
       weather.buildCurrentWeather();
-      weather.buildForcast();
+      weather.buildForecast();
+      weather.buildMap();
     });
 });
 
 // TESTING
 
-// let weather = {};
 // weather = new Weather('perth');
 // weather
 //   .getLocation()

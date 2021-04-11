@@ -14,7 +14,7 @@
     <title>Weather Dashboard</title>
   </head>
   <body>
-    <section class="hero is-link mb-4">
+    <section class="hero is-small is-link mb-4">
       <div class="hero-body">
         <h1 class="title is-1">Weather Dashboard</h1>
       </div>
@@ -23,13 +23,15 @@
       <div class="column is-3">
         <div class="field">
           <div class="block">
-            <label class="title is-3">Search for a City:</label>
-            <p><b>TIP</b>: for more refined result enter city name with a country code eg. Bridgetown,AU</p>
+            <p class="title is-3 mb-3">Search for a City:</p>
+            <input id="search-field" class="input is-info is-medium is-fullwidth" type="text" placeholder="Large input" />
+            <div class="content is-small">
+              <p class=""><b>TIP</b>: for more refined result enter city name with a country code eg. Bridgetown,AU</p>
+            </div>
           </div>
-          <input id="search-field" class="input is-info is-large is-fullwidth" type="text" placeholder="Large input" />
         </div>
         <div class="buttons">
-          <button id="search-button" class="button is-large is-info is-fullwidth">Search</button>
+          <button id="search-button" class="button is-medium is-info is-fullwidth">Search</button>
         </div>
         <div class="buttons">
           <button class="button is-medium is-info is-light is-fullwidth">Search History</button>
@@ -40,12 +42,9 @@
           <button class="button is-medium is-info is-light is-fullwidth">Search History</button>
           <button class="button is-medium is-info is-light is-fullwidth">Search History</button>
           <button class="button is-medium is-info is-light is-fullwidth">Search History</button>
-          <button class="button is-medium is-info is-light is-fullwidth">Search History</button>
         </div>
-
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima, cumque? At ab magnam unde dolorum deleniti
-        dolorem quam aliquid omnis odit vel, tempora, quaerat asperiores! Voluptatum error libero debitis magni.
-      </div>
+        <div class="buttons">
+          <button class="button is-medium is-danger is-light is-fullwidth">Clear History</button>
 
       <div class="column is-9">
         <div class="container mb-3">
@@ -55,7 +54,7 @@
           </div>
         </div>
         <div class="container">
-          <div id="forecast-container" class="columns"></div>
+          <div id="forecast-container" class="columns is-flex-wrap-wrap"></div>
         </div>
       </div>
     </div>

@@ -50,10 +50,13 @@ class Weather {
       )
         .then((response) => response.json())
         .then((data) => {
+          console.log(data);
           // build current conditions object
           this.currentConditions = {
             date: dayjs.unix(data.current.dt),
             currentTemp: data.current.temp,
+            minTemp: data.daily[0].temp.min,
+            maxTemp: data.daily[0].temp.max,
             humidity: data.current.humidity,
             windSpeed: data.current.wind_speed,
             icon: data.current.weather[0].icon,
@@ -92,36 +95,40 @@ class Weather {
     const cond = this.currentConditions;
     const formattedDate = dayjs(cond.date).format('DD/MM/YYYY');
     const dayName = dayjs(cond.date).format('dddd');
-    const iconLocation = `http://openweathermap.org/img/wn/${cond.icon}.png`;
+    const iconLocation = `http://openweathermap.org/img/wn/${cond.icon}@2x.png`;
     // if current weather is populated --> clear.
     if (targetElement.innerHTML) targetElement.innerHTML = '';
     const newDiv = document.createElement('div');
-    // newDiv.classList.add('column', 'is-two-fifths');
+    newDiv.classList.add('card');
     newDiv.innerHTML = `
-    <div class="card">
-      <div class="card-content p-1">
+    <div class="card-content p-3">
+      <h2 class="title is-1">${this.cityOutput},  ${this.cityCountry}</h2>
+
         <div class="media mb-2">
           <div class="media-left">
-            <figure class="image is-48x48">
+            <figure class="image is-96x96">
               <img src=${iconLocation} alt="weather-icon">
             </figure>
           </div>
           <div class="media-content">
-            <p class="title is-6">${formattedDate}</p>
-            <p class="subtitle is-6">${dayName}</p>
+            <p class="title is-5">${formattedDate}</p>
+            <p class="subtitle is-5 mb-1">${dayName}</p>
+            <p class="subtitle is-5"><b>${cond.description}</b> </p>
           </div>
           </div>
           <div class="content">
-            <p class="is-size-6"><b>${cond.description}</b> </p>
-            <p class="is-size-6"><b>Curent Temperature ${cond.currentTemp} °C</b> </p>
+            <p class="is-size-1 mb-2"><b>${cond.currentTemp} °C</b> </p>
             <p class="is-6 mb-0">Todays Min: <b>${cond.minTemp} °C </b></p>
             <p class="is-6 mb-0">Todays Max: <b>${cond.maxTemp} °C</b></p>
-            <p class="is-6 mb-0">Current Wind: <b>${cond.windSpeed} km/h</b> </p>
-            <p class="is-6 mb-0">Current Humidity: <b>${cond.humidity} %</b> </p>
-            <p class="is-6 mb-0">Current UV Index: <b>${cond.uv} %</b> </p>
+            <p class="is-6 mb-0">Current Wind: <b>${(
+              cond.windSpeed * 3.6
+            ).toFixed(2)} km/h</b> </p>
+            <p class="is-6 mb-0">Current Humidity: <b>${
+              cond.humidity
+            } %</b> </p>
+            <p class="is-6 mb-0">Current UV Index: <b>${cond.uv} </b> </p>
           </div>
       </div>
-    </div>
     `;
     targetElement.append(newDiv);
     this.buildForecast();
@@ -143,7 +150,7 @@ class Weather {
       newDiv.classList.add('column', 'is-one-fifth');
       newDiv.innerHTML = `
       <div class="card">
-        <div class="card-content p-1">
+        <div class="card-content p-2">
           <div class="media mb-2">
             <div class="media-left">
               <figure class="image is-48x48">
@@ -159,7 +166,9 @@ class Weather {
               <p class="is-size-6"><b>${day.description}</b> </p>
               <p class="is-6 mb-0">Min: <b>${day.minTemp} °C </b></p>
               <p class="is-6 mb-0">Max: <b>${day.maxTemp} °C</b></p>
-              <p class="is-6 mb-0">Wind: <b>${day.windSpeed} km/h</b> </p>
+              <p class="is-6 mb-0">Wind: <b>${(day.windSpeed * 3.6).toFixed(
+                2
+              )} km/h</b> </p>
               <p class="is-6 mb-0">Humidity: <b>${day.humidity} %</b> </p>
             </div>
         </div>
@@ -181,13 +190,4 @@ class Weather {
     </div>
     `;
   }
-}
-
-{
-  /* <iframe
-  width="650"
-  height="450"
-  src="https://embed.windy.com/embed2.html?lat=-28.699&lon=118.079&detailLat=-31.967&detailLon=115.862&width=650&height=450&zoom=5&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=&calendar=now&pressure=true&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1"
-  frameBorder="0"
-/>; */
 }

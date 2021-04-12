@@ -192,4 +192,17 @@ class Weather {
     </div>
     `;
   }
+
+  writeResult() {
+    const local = window.localStorage;
+    // check if localStorage 'object' exists, if not create
+    if (!local.getItem('cityList')) {
+      local.setItem('cityList', `${JSON.stringify([])}`);
+    }
+    // access localStoarge
+    const cityList = JSON.parse(local.getItem('cityList'));
+    cityList.p;
+  }
 }
+
+// window.localStorage.ge;

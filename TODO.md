@@ -4,3 +4,5 @@
 - [x] basic fetch for forecast
 
 - [ ] maybe add search by city, country? eg. for albany?
+
+- [ ] change forecast cards to stop 1/5th earlier??

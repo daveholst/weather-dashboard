@@ -102,7 +102,7 @@ class Weather {
     const cond = this.currentConditions;
     const formattedDate = dayjs(cond.date).format('DD/MM/YYYY');
     const dayName = dayjs(cond.date).format('dddd');
-    const iconLocation = `http://openweathermap.org/img/wn/${cond.icon}@2x.png`;
+    const iconLocation = `https://openweathermap.org/img/wn/${cond.icon}@2x.png`;
     // if current weather is populated --> clear first.
     if (targetElement.innerHTML) targetElement.innerHTML = '';
     const newDiv = document.createElement('div');

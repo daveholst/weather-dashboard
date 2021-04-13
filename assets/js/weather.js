@@ -175,7 +175,7 @@ class Weather {
     if (targetElement.innerHTML) targetElement.innerHTML = '';
     // build loop - start from tomorrow.
     this.forecastConditions.forEach((day) => {
-      const iconLocation = `http://openweathermap.org/img/wn/${day.icon}.png`;
+      const iconLocation = `https://openweathermap.org/img/wn/${day.icon}.png`;
       const formattedDate = dayjs(day.date).format('DD/MM/YYYY');
       const dayName = dayjs(day.date).format('dddd');
       // create and append flex container

@@ -2,7 +2,7 @@
 class Weather {
   constructor(city) {
     this.apiKey = 'b0e377a6dc0651dc529d2d62a44c0ec9';
-    this.owmApiURL = 'http://api.openweathermap.org/data/2.5/';
+    this.owmApiURL = 'https://api.openweathermap.org/data/2.5/';
     this.cityInput = city;
     this.currentConditions = {};
     this.forecastConditions = [];

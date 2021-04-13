@@ -135,11 +135,39 @@ class Weather {
             <p class="is-6 mb-0">Current Humidity: <b>${
               cond.humidity
             } %</b> </p>
-            <p class="is-6 mb-0">Current UV Index: <b>${cond.uv} </b> </p>
+            <p class="is-6 mb-0">Current UV Index: <b id="uv-index"></b> </p>
           </div>
       </div>
     `;
     targetElement.append(newDiv);
+    this.uvBuilder();
+  }
+
+  uvBuilder() {
+    const num = this.currentConditions.uv;
+    // console.log(this.currentConditions.uv);
+    console.log(typeof num, num);
+    const targetElement = document.querySelector('#uv-index');
+    const newUv = document.createElement('span');
+    if (num >= 0 && num <= 2) {
+      newUv.innerText = `${num} [Low]`;
+      newUv.classList.add('uv-low');
+    } else if (num > 2 && num <= 5) {
+      newUv.innerText = `${num} [Moderate]`;
+      newUv.classList.add('uv-moderate');
+    } else if (num > 5 && num <= 7) {
+      newUv.innerText = `${num} [High]`;
+      newUv.classList.add('uv-high');
+    } else if (num > 7 && num <= 10) {
+      newUv.innerText = `${num} [Very High]`;
+      newUv.classList.add('uv-very-high');
+    } else if (num > 10) {
+      newUv.innerText = `${num} [Extreme]`;
+      newUv.classList.add('uv-extreme');
+    } else {
+      console.error('Something broke in the uv index builder');
+    }
+    targetElement.appendChild(newUv);
   }
 
   buildForecast() {
@@ -245,10 +273,17 @@ class Weather {
       newButton.innerText = city;
       targetElement.appendChild(newButton);
       // add click handler
-      // newButton.addEventListener('click', () =>)
+      newButton.addEventListener('click', (event) => {
+        const searchTerm = event.srcElement.outerText;
+        this.cityInput = searchTerm;
+        this.domBuilder();
+
+        console.log(event.srcElement.outerText);
+      });
     });
   }
 
+  // async dom builder.
   domBuilder() {
     this.getLocation()
       .then(() => this.getWeather())
@@ -257,7 +292,7 @@ class Weather {
         this.buildCurrentWeather();
         this.buildForecast();
         this.buildMap();
-        searchResultsBuilder();
+        this.searchResultsBuilder();
       });
   }
 }

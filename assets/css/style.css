@@ -1,3 +1,29 @@
 .card {
   height: 100%;
 }
+
+.uv-low {
+  background-color: rgb(120, 253, 160);
+  padding: 5px;
+  border-radius: 5px;
+}
+.uv-moderate {
+  background-color: rgb(244, 253, 120);
+  padding: 5px;
+  border-radius: 5px;
+}
+.uv-high {
+  background-color: rgb(253, 195, 120);
+  padding: 5px;
+  border-radius: 5px;
+}
+.uv-very-high {
+  background-color: rgb(253, 120, 120);
+  padding: 5px;
+  border-radius: 5px;
+}
+.uv-extreme {
+  background-color: rgb(253, 120, 242);
+  padding: 5px;
+  border-radius: 5px;
+}

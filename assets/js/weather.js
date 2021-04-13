@@ -28,15 +28,13 @@ class Weather {
         .then((response) => response.json())
         // write data to this object. --  return a promise for chaining later?
         .then((data) => {
-          // put copy back onto object
           this.cityOutput = data.name;
-          this.cityCountry = data.sys.country;
-          this.cityCoords = {
-            lat: data.coord.lat,
-            lng: data.coord.lon,
-          };
-
           if (this.cityOutput) {
+            this.cityCountry = data.sys.country;
+            this.cityCoords = {
+              lat: data.coord.lat,
+              lng: data.coord.lon,
+            };
             resolve(`Location fetched for ${this.cityOutput}`);
           } else {
             reject(
@@ -293,7 +291,8 @@ class Weather {
         this.buildForecast();
         this.buildMap();
         this.searchResultsBuilder();
-      });
+      })
+      .catch(() => console.error('Error building to DOM'));
   }
 }
 

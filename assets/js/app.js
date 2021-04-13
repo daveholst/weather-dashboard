@@ -18,20 +18,16 @@ searchButton.addEventListener('click', () => {
   const searchLocation = searchField.value;
   const weather = new Weather(searchLocation);
   weather.domBuilder();
-  // weather
-  //   .getLocation()
-  //   .then(() => weather.getWeather())
-  //   .then(() => {
-  //     weather.writeResult();
-  //     weather.buildCurrentWeather();
-  //     weather.buildForecast();
-  //     weather.buildMap();
-  //     searchResultsBuilder();
-  //   });
 });
 
-// load search results on initial page load
-// searchResultsBuilder();
+// auto-search on return on search field
+searchField.addEventListener('keypress', (event) => {
+  if (event.key === 'Enter') {
+    const searchLocation = searchField.value;
+    const weather = new Weather(searchLocation);
+    weather.domBuilder();
+  }
+});
 
 // clear history button handler
 clearHistoryButton.addEventListener('click', () => {

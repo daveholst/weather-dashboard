@@ -9,6 +9,15 @@ class Weather {
     // this.getWeatherCurrent();
   }
 
+  get cityList() {
+    return JSON.parse(window.localStorage.getItem('cityList'));
+  }
+
+  // sets cityList to local storage
+  set cityList(list) {
+    window.localStorage.setItem('cityList', JSON.stringify(list));
+  }
+
   // gets lat, long, country and formatted output name. returns promise
   getLocation() {
     // fetch JSON
@@ -203,16 +212,53 @@ class Weather {
       local.setItem('cityList', `${JSON.stringify([])}`);
     }
     // access localStoarge
-    const cityList = JSON.parse(local.getItem('cityList'));
+    // this.cityList = JSON.parse(local.getItem('cityList'));
 
     // check if it already exists in the (no dupes)
-    console.log(!cityList.includes(cityName));
-    if (!cityList.includes(cityName)) {
+    console.log(!this.cityList.includes(cityName));
+    if (!this.cityList.includes(cityName)) {
+      const tempCityList = this.cityList;
       // cityName to start of array
-      cityList.unshift(cityName);
+      tempCityList.unshift(cityName);
+      this.cityList = tempCityList;
+      console.log(this.cityList);
       // write back to local
-      local.setItem('cityList', JSON.stringify(cityList));
+      // local.setItem('cityList', JSON.stringify(this.cityList));
     }
+  }
+
+  searchResultsBuilder() {
+    // clear out search results
+    document.querySelector('#search-results').innerHTML = '';
+
+    const targetElement = document.querySelector('#search-results');
+    // get city List
+    this.cityList.forEach((city) => {
+      const newButton = document.createElement('button');
+      newButton.classList.add(
+        'button',
+        'is-medium',
+        'is-info',
+        'is-light',
+        'is-fullwidth'
+      );
+      newButton.innerText = city;
+      targetElement.appendChild(newButton);
+      // add click handler
+      // newButton.addEventListener('click', () =>)
+    });
+  }
+
+  domBuilder() {
+    this.getLocation()
+      .then(() => this.getWeather())
+      .then(() => {
+        this.writeResult();
+        this.buildCurrentWeather();
+        this.buildForecast();
+        this.buildMap();
+        searchResultsBuilder();
+      });
   }
 }
 

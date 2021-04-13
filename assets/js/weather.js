@@ -195,13 +195,24 @@ class Weather {
 
   writeResult() {
     const local = window.localStorage;
+    // concat cityname and country
+    const cityName = this.cityOutput.concat(', ', this.cityCountry);
+    console.log(cityName);
     // check if localStorage 'object' exists, if not create
     if (!local.getItem('cityList')) {
       local.setItem('cityList', `${JSON.stringify([])}`);
     }
     // access localStoarge
     const cityList = JSON.parse(local.getItem('cityList'));
-    cityList.p;
+
+    // check if it already exists in the (no dupes)
+    console.log(!cityList.includes(cityName));
+    if (!cityList.includes(cityName)) {
+      // cityName to start of array
+      cityList.unshift(cityName);
+      // write back to local
+      local.setItem('cityList', JSON.stringify(cityList));
+    }
   }
 }
 

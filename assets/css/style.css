@@ -2,6 +2,7 @@
   height: 100%;
 }
 
+/* classes to change look of UV buttons */
 .uv-low {
   background-color: rgb(120, 253, 160);
   padding: 5px;

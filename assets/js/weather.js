@@ -8,6 +8,7 @@ class Weather {
     this.forecastConditions = [];
   }
 
+  // gets cityList from local storage
   get cityList() {
     return JSON.parse(window.localStorage.getItem('cityList'));
   }
@@ -56,7 +57,6 @@ class Weather {
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
           // build current conditions object
           this.currentConditions = {
             date: dayjs.unix(data.current.dt),
@@ -235,7 +235,6 @@ class Weather {
     const local = window.localStorage;
     // concat cityname and country
     const cityName = this.cityOutput.concat(', ', this.cityCountry);
-    console.log(cityName);
     // check if localStorage 'object' exists, if not create
     if (!local.getItem('cityList')) {
       local.setItem('cityList', `${JSON.stringify([])}`);
@@ -273,8 +272,6 @@ class Weather {
         const searchTerm = event.srcElement.outerText;
         this.cityInput = searchTerm;
         this.domBuilder();
-
-        console.log(event.srcElement.outerText);
       });
     });
   }

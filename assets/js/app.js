@@ -34,6 +34,5 @@ searchField.addEventListener('keypress', (event) => {
 // clear history button handler
 clearHistoryButton.addEventListener('click', () => {
   window.localStorage.removeItem('cityList');
-  console.log(window.localStorage.getItem('cityList'));
   document.querySelector('#search-results').innerHTML = '';
 });

@@ -6,7 +6,6 @@ class Weather {
     this.cityInput = city;
     this.currentConditions = {};
     this.forecastConditions = [];
-    // this.getWeatherCurrent();
   }
 
   get cityList() {
@@ -26,7 +25,7 @@ class Weather {
       fetch(`${owmApiURL}weather?q=${cityInput}&units=metric&appid=${apiKey}`)
         // parse JSON
         .then((response) => response.json())
-        // write data to this object. --  return a promise for chaining later?
+        // write data to this object.
         .then((data) => {
           this.cityOutput = data.name;
           if (this.cityOutput) {
@@ -97,13 +96,14 @@ class Weather {
     });
   }
 
+  // builds current weather elements and pushes to DOM
   buildCurrentWeather() {
     const targetElement = document.querySelector('#current-weather');
     const cond = this.currentConditions;
     const formattedDate = dayjs(cond.date).format('DD/MM/YYYY');
     const dayName = dayjs(cond.date).format('dddd');
     const iconLocation = `http://openweathermap.org/img/wn/${cond.icon}@2x.png`;
-    // if current weather is populated --> clear.
+    // if current weather is populated --> clear first.
     if (targetElement.innerHTML) targetElement.innerHTML = '';
     const newDiv = document.createElement('div');
     newDiv.classList.add('card');
@@ -141,12 +141,12 @@ class Weather {
     this.uvBuilder();
   }
 
+  // build and style uv span element based on value found in this object
   uvBuilder() {
-    const num = this.currentConditions.uv;
-    // console.log(this.currentConditions.uv);
-    console.log(typeof num, num);
     const targetElement = document.querySelector('#uv-index');
+    const num = this.currentConditions.uv;
     const newUv = document.createElement('span');
+    // change class and innerText based on ranges
     if (num >= 0 && num <= 2) {
       newUv.innerText = `${num} [Low]`;
       newUv.classList.add('uv-low');
@@ -165,9 +165,11 @@ class Weather {
     } else {
       console.error('Something broke in the uv index builder');
     }
+    // append into DOM
     targetElement.appendChild(newUv);
   }
 
+  // builds 5 day forecast elements and appends to DOM
   buildForecast() {
     const targetElement = document.querySelector('#forecast-container');
 
@@ -212,10 +214,10 @@ class Weather {
       </div>
       `;
       targetElement.append(newDiv);
-      // create card div
     });
   }
 
+  // takes current lat and long and requests a weather map generated on windy.com
   buildMap() {
     const targetElement = document.querySelector('#map');
 
@@ -228,6 +230,7 @@ class Weather {
     `;
   }
 
+  // write search result to localStorage
   writeResult() {
     const local = window.localStorage;
     // concat cityname and country
@@ -237,11 +240,7 @@ class Weather {
     if (!local.getItem('cityList')) {
       local.setItem('cityList', `${JSON.stringify([])}`);
     }
-    // access localStoarge
-    // this.cityList = JSON.parse(local.getItem('cityList'));
-
     // check if it already exists in the (no dupes)
-    console.log(!this.cityList.includes(cityName));
     if (!this.cityList.includes(cityName)) {
       const tempCityList = this.cityList;
       // cityName to start of array
@@ -249,16 +248,15 @@ class Weather {
       this.cityList = tempCityList;
       console.log(this.cityList);
       // write back to local
-      // local.setItem('cityList', JSON.stringify(this.cityList));
     }
   }
 
+  // build search results list and append to DOM
   searchResultsBuilder() {
     // clear out search results
     document.querySelector('#search-results').innerHTML = '';
-
     const targetElement = document.querySelector('#search-results');
-    // get city List
+    // get city List and loop through
     this.cityList.forEach((city) => {
       const newButton = document.createElement('button');
       newButton.classList.add(
@@ -281,7 +279,7 @@ class Weather {
     });
   }
 
-  // async dom builder.
+  // async dom builder that run multiple methods to rebuild most of page.
   domBuilder() {
     this.getLocation()
       .then(() => this.getWeather())
@@ -295,5 +293,3 @@ class Weather {
       .catch(() => console.error('Error building to DOM'));
   }
 }
-
-// window.localStorage.ge;

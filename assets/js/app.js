@@ -1,3 +1,4 @@
+// DOM Selectors
 const searchField = document.querySelector('#search-field');
 const searchButton = document.querySelector('#search-button');
 const clearHistoryButton = document.querySelector('#clear-history');
@@ -9,6 +10,7 @@ if (localStorage.getItem('cityList')) {
   const weather = new Weather(cityList[0]);
   weather.domBuilder();
 } else {
+  // if no cityList --> build with Perth
   const weather = new Weather('perth');
   weather.domBuilder();
 }

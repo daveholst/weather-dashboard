@@ -3,7 +3,7 @@ const searchButton = document.querySelector('#search-button');
 const clearHistoryButton = document.querySelector('#clear-history');
 
 // function to build search results list
-if (JSON.parse(localStorage.getItem('cityList')).length > 0) {
+if (localStorage.getItem('cityList')) {
   const cityList = JSON.parse(localStorage.getItem('cityList'));
   // load screen with last search result
   const weather = new Weather(cityList[0]);
@@ -31,7 +31,7 @@ searchField.addEventListener('keypress', (event) => {
 
 // clear history button handler
 clearHistoryButton.addEventListener('click', () => {
-  window.localStorage.setItem('cityList', JSON.stringify([]));
+  window.localStorage.removeItem('cityList');
   console.log(window.localStorage.getItem('cityList'));
   document.querySelector('#search-results').innerHTML = '';
 });
